@@ -1,6 +1,21 @@
 import json
+import argparse
 
-f = open("followers_1.json","r")
+parser = argparse.ArgumentParser(description="Getting filenames")
+
+parser.add_argument("--followerfile", '-ff', default="followers.json", help="Filename of followers datafile (including the .json)")
+parser.add_argument("--followingfile", '-fi', default="following.json", help="Filename of following datafile (including the .json)")
+
+args = parser.parse_args()
+
+try:
+	f = open(args.followerfile,"r")
+except Exception as e:
+	print(e)
+	print("\n ------------------------------------------------------ \n\
+Did you forget to upload the follower filename? Type \'python unfollower_parser.py --help\' for more information. \
+\n ------------------------------------------------------ \n")
+
 followers_raw = json.loads(f.read())
 followers_list = []
 
@@ -10,7 +25,15 @@ for each_follower in followers_raw:
 	follower_count +=1
 	followers_list.append(name)
 
-f = open("following.json","r")
+try:
+	f = open(args.followingfile,"r")
+except Exception as e:
+	print(e)
+	print("\n ------------------------------------------------------ \n\
+Did you forget to upload the following filename? Type \'python unfollower_parser.py --help\' for more information. \
+\n ------------------------------------------------------ \n")
+
+
 following_raw = json.loads(f.read())
 following_list = []
 
